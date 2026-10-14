@@ -1,0 +1,398 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Ninth & Alder Coffee: cafetería ficticia de especialidad pensada para teletrabajar. Sitio de práctica.">
+<title>Ninth & Alder Coffee</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: web de una sola página con nav en forma de línea de metro (cada sección es una parada),
+   hero con azulejo de metro, menú con puntos guía, panel de teletrabajo en monoespaciada. */
+:root {
+  --bg: #E6EAE7;        /* azulejo de metro */
+  --surface: #F5F7F5;   /* superficie de tarjetas */
+  --fg: #111A16;        /* tinta verde casi negra */
+  --muted: #4F5B55;     /* texto secundario */
+  --line: #C6CEC9;      /* juntas del azulejo */
+  --accent: #F2B705;    /* amarillo taxi (solo como relleno) */
+  --on-accent: #111A16;
+  --brick: #A8392B;     /* ladrillo, detalle pequeño */
+  --display: "Barlow Condensed", "Arial Narrow", Impact, sans-serif;
+  --body: "Barlow", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1513; --surface: #172019; --fg: #E8ECE9; --muted: #9AA6A0;
+    --line: #26332D; --accent: #F2B705; --on-accent: #111A16; --brick: #E0705E;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1513; --surface: #172019; --fg: #E8ECE9; --muted: #9AA6A0;
+  --line: #26332D; --accent: #F2B705; --on-accent: #111A16; --brick: #E0705E;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.55;
+  padding-block: 0;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.page { max-width: 1040px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--display); font-weight: 800; text-transform: uppercase; letter-spacing: .01em; line-height: .95; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; text-decoration-thickness: 2px; text-underline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+.mono { font-family: var(--mono); }
+.label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- cabecera: marca + línea de metro ---------- */
+.top { padding-block: 20px 8px; display: flex; flex-direction: column; gap: 18px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.bullet {
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--accent); color: var(--on-accent);
+  display: grid; place-items: center;
+  font-family: var(--display); font-weight: 800; font-size: 28px; line-height: 1;
+  flex: none;
+}
+.brand-name { font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; letter-spacing: .02em; line-height: 1; }
+.brand-name small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .14em; color: var(--muted); margin-top: 4px; }
+
+.route { list-style: none; margin: 0; padding: 0; display: flex; position: relative; }
+.route::before { content: ""; position: absolute; left: 7px; right: 7px; top: 7px; height: 4px; background: var(--fg); }
+.route li { flex: 1; position: relative; }
+.route li:last-child { flex: 0 0 auto; }
+.route a { display: flex; flex-direction: column; gap: 8px; text-decoration: none; font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.route a::before { content: ""; width: 18px; height: 18px; border-radius: 50%; background: var(--bg); border: 4px solid var(--fg); position: relative; z-index: 1; }
+.route a:hover::before { background: var(--accent); }
+.route a:hover { text-decoration: underline; }
+
+/* ---------- hero ---------- */
+.hero {
+  margin-top: 20px;
+  border: 2px solid var(--fg);
+  background-color: var(--surface);
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 28px;
+  display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 0;
+}
+.hero-main { padding: clamp(22px, 5vw, 48px); display: flex; flex-direction: column; gap: 20px; background: color-mix(in srgb, var(--surface) 88%, transparent); }
+.hero h1 { font-size: clamp(46px, 9.5vw, 104px); }
+.hero h1 em { font-style: normal; background: var(--accent); color: var(--on-accent); padding: 0 .12em; }
+.hero p.lead { max-width: 46ch; color: var(--muted); font-size: 18px; }
+.status { align-self: flex-start; display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 13px; border: 2px solid var(--fg); padding: 8px 12px; background: var(--surface); }
+.dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); flex: none; }
+.status[data-open="true"] .dot { background: #2E9E5B; box-shadow: 0 0 0 3px color-mix(in srgb, #2E9E5B 30%, transparent); }
+.status[data-open="false"] .dot { background: var(--brick); }
+
+.ticket { border-left: 2px solid var(--fg); background: var(--fg); color: var(--bg); padding: clamp(20px, 4vw, 32px); display: flex; flex-direction: column; gap: 14px; justify-content: center; }
+.ticket .label { color: color-mix(in srgb, var(--bg) 65%, transparent); }
+.ticket dl { margin: 0; display: grid; gap: 14px; }
+.ticket dt { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: color-mix(in srgb, var(--bg) 60%, transparent); }
+.ticket dd { margin: 2px 0 0; font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; text-transform: uppercase; }
+.ticket dd span { color: var(--accent); }
+
+/* ---------- secciones ---------- */
+section { padding-block: clamp(44px, 8vw, 84px) 0; scroll-margin-top: 12px; }
+.sec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 26px; }
+.sec-head h2 { font-size: clamp(36px, 6vw, 60px); }
+.sec-head .bullet { width: 34px; height: 34px; font-size: 20px; }
+.sec-intro { max-width: 58ch; color: var(--muted); margin-bottom: 28px; }
+
+/* menú */
+.menu { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 36px; }
+.menu h3 { font-size: 24px; padding-bottom: 8px; border-bottom: 4px solid var(--fg); margin-bottom: 6px; }
+.menu ul { list-style: none; margin: 0; padding: 0; }
+.menu li { display: flex; align-items: baseline; gap: 8px; padding-block: 9px; }
+.menu li .n { font-weight: 600; }
+.menu li .d { display: block; font-size: 14px; color: var(--muted); font-weight: 400; line-height: 1.35; }
+.menu li .dots { flex: 1; border-bottom: 2px dotted var(--line); min-width: 14px; transform: translateY(-4px); }
+.menu li .p { font-family: var(--mono); font-size: 15px; font-variant-numeric: tabular-nums; }
+.menu li > div { min-width: 0; }
+.menu-note { margin-top: 22px; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+
+/* trabajar */
+.work { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 2px solid var(--fg); background: var(--surface); }
+.work > div { padding: 20px 18px; border-right: 2px solid var(--fg); display: flex; flex-direction: column; gap: 8px; }
+.work > div:last-child { border-right: 0; }
+.work b { font-family: var(--display); font-size: 44px; font-weight: 800; line-height: .95; text-transform: uppercase; }
+.work b small { font-size: 20px; }
+.work p { font-size: 14px; color: var(--muted); line-height: 1.4; }
+
+.wifi { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; border: 2px dashed var(--fg); padding: 16px 18px; }
+.wifi-data { display: grid; gap: 4px; font-family: var(--mono); font-size: 14px; min-width: 0; }
+.wifi-data span { overflow-wrap: anywhere; }
+.btn { font-family: var(--mono); font-size: 13px; letter-spacing: .06em; text-transform: uppercase; background: var(--accent); color: var(--on-accent); border: 2px solid var(--fg); padding: 10px 14px; cursor: pointer; }
+.btn:hover { background: var(--fg); color: var(--bg); }
+
+.passes { margin-top: 26px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+.pass { border: 2px solid var(--fg); background: var(--surface); padding: 22px; display: flex; flex-direction: column; gap: 10px; }
+.pass.feat { background: var(--accent); color: var(--on-accent); }
+.pass.feat .label, .pass.feat p { color: var(--on-accent); }
+.pass h3 { font-size: 30px; }
+.pass .price { font-family: var(--display); font-size: 52px; font-weight: 800; line-height: 1; }
+.pass .price small { font-family: var(--mono); font-size: 13px; font-weight: 400; letter-spacing: .04em; }
+.pass p { color: var(--muted); font-size: 15px; }
+
+/* horario + visita */
+.visit { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 40px; }
+.hours { width: 100%; border-collapse: collapse; font-family: var(--mono); font-size: 15px; }
+.hours th, .hours td { text-align: left; padding: 12px 8px; border-bottom: 2px solid var(--line); font-weight: 400; }
+.hours td:last-child { text-align: right; font-variant-numeric: tabular-nums; }
+.hours tr.today { background: var(--accent); color: var(--on-accent); font-weight: 500; }
+.hours tr.today th, .hours tr.today td { border-bottom-color: var(--fg); }
+.contact { display: grid; gap: 22px; align-content: start; }
+.contact h3 { font-size: 22px; margin-bottom: 6px; }
+.contact p { font-size: 18px; }
+.contact .mono { font-size: 16px; }
+
+footer { margin-top: clamp(56px, 9vw, 96px); border-top: 4px solid var(--fg); padding-block: 22px 40px; display: flex; flex-wrap: wrap; gap: 10px 24px; justify-content: space-between; font-family: var(--mono); font-size: 12px; color: var(--muted); }
+footer strong { color: var(--fg); font-weight: 500; }
+
+/* ---------- móvil ---------- */
+@media (max-width: 860px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .ticket { border-left: 0; border-top: 2px solid var(--fg); }
+  .menu { grid-template-columns: minmax(0, 1fr); }
+  .work { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .work > div:nth-child(2) { border-right: 0; }
+  .work > div:nth-child(-n+2) { border-bottom: 2px solid var(--fg); }
+  .passes, .visit { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 480px) {
+  body { font-size: 16px; }
+  .route a { font-size: 10px; letter-spacing: .04em; }
+  .work b { font-size: 36px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+</style>
+
+<style>body{margin:0}</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="brand">
+      <div class="bullet" aria-hidden="true">9</div>
+      <div class="brand-name">Ninth &amp; Alder<small>COFFEE · TOSTADORES Y COWORK</small></div>
+    </div>
+    <nav aria-label="Secciones">
+      <ol class="route">
+        <li><a href="#menu">Menú</a></li>
+        <li><a href="#trabajar">Trabajar</a></li>
+        <li><a href="#horario">Horario</a></li>
+        <li><a href="#visita">Visita</a></li>
+      </ol>
+    </nav>
+  </header>
+
+  <div class="hero">
+    <div class="hero-main">
+      <h1>Café de especialidad. <em>Wi-Fi</em> de verdad.</h1>
+      <p class="lead">Tostamos en pequeños lotes, colamos a mano y dejamos un enchufe en cada asiento. Ven con el portátil, quédate hasta que termines.</p>
+      <div class="status" id="status" data-open="true" role="status"><span class="dot"></span><span id="status-text">Abierto hoy hasta las 20:00</span></div>
+    </div>
+    <aside class="ticket" aria-label="Datos rápidos">
+      <span class="label">Pase de hoy</span>
+      <dl>
+        <dt>Conexión</dt><dd><span>500</span> Mbps</dd>
+        <dt>Enchufes</dt><dd>1 por asiento</dd>
+        <dt>Hora silenciosa</dt><dd>14:00 – 16:00</dd>
+      </dl>
+    </aside>
+  </div>
+
+  <section id="menu">
+    <div class="sec-head"><div class="bullet" aria-hidden="true">M</div><h2>Menú</h2></div>
+    <p class="sec-intro">Granos de tres orígenes que rotamos cada mes. Pregunta por el café de la semana en barra.</p>
+    <div class="menu">
+      <div>
+        <h3>Caliente</h3>
+        <ul>
+          <li><div><span class="n">Espresso</span><span class="d">Doble, mezcla de la casa</span></div><span class="dots"></span><span class="p">3,50</span></li>
+          <li><div><span class="n">Cortado</span><span class="d">Espresso con leche texturizada</span></div><span class="dots"></span><span class="p">4,25</span></li>
+          <li><div><span class="n">Flat white</span><span class="d">Doble ristretto, leche entera o avena</span></div><span class="dots"></span><span class="p">5,00</span></li>
+          <li><div><span class="n">V60 del día</span><span class="d">Filtro a mano, origen único</span></div><span class="dots"></span><span class="p">6,00</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Frío</h3>
+        <ul>
+          <li><div><span class="n">Cold brew</span><span class="d">Infusión en frío durante 18 horas</span></div><span class="dots"></span><span class="p">5,25</span></li>
+          <li><div><span class="n">Iced latte</span><span class="d">Espresso, leche y hielo</span></div><span class="dots"></span><span class="p">5,50</span></li>
+          <li><div><span class="n">Espresso tonic</span><span class="d">Tónica artesanal y piel de naranja</span></div><span class="dots"></span><span class="p">5,75</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Para comer</h3>
+        <ul>
+          <li><div><span class="n">Bagel con queso crema</span><span class="d">Sésamo o cebolla</span></div><span class="dots"></span><span class="p">4,50</span></li>
+          <li><div><span class="n">Egg &amp; cheese</span><span class="d">Huevo, cheddar y pan de leche</span></div><span class="dots"></span><span class="p">6,50</span></li>
+          <li><div><span class="n">Banana bread</span><span class="d">Hecho cada mañana</span></div><span class="dots"></span><span class="p">4,00</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="menu-note">PRECIOS EN DÓLARES. MENÚ DE EJEMPLO.</p>
+  </section>
+
+  <section id="trabajar">
+    <div class="sec-head"><div class="bullet" aria-hidden="true">T</div><h2>Para trabajar</h2></div>
+    <p class="sec-intro">La sala grande es para el portátil. Las llamadas van a las cabinas. Si necesitas concentrarte, hay una franja sin música por la tarde.</p>
+    <div class="work">
+      <div><span class="label">Wi-Fi</span><b>500 <small>Mbps</small></b><p>Fibra dedicada, sin límite de tiempo ni de dispositivos.</p></div>
+      <div><span class="label">Enchufes</span><b>1:1</b><p>Un enchufe y un puerto USB-C por asiento.</p></div>
+      <div><span class="label">Cabinas</span><b>2</b><p>Para videollamadas. Se reservan en barra, máximo 45 minutos.</p></div>
+      <div><span class="label">Silencio</span><b>14–16 <small>h</small></b><p>Sin música y con conversaciones en voz baja.</p></div>
+    </div>
+
+    <div class="wifi">
+      <div class="wifi-data">
+        <span><span class="label">Red</span> &nbsp;NinthAlder_Guest</span>
+        <span><span class="label">Clave</span> &nbsp;<span id="wifi-pass">espresso-0100</span></span>
+      </div>
+      <button class="btn" id="copy" type="button">Copiar clave</button>
+    </div>
+
+    <div class="passes">
+      <article class="pass feat">
+        <span class="label">Más pedido</span>
+        <h3>Pase de mesa</h3>
+        <div class="price">$12 <small>/ DÍA</small></div>
+        <p>Asiento fijo con enchufe y café de filtro ilimitado hasta las 15:00.</p>
+      </article>
+      <article class="pass">
+        <span class="label">Para habituales</span>
+        <h3>Pase mensual</h3>
+        <div class="price">$149 <small>/ MES</small></div>
+        <p>Entrada libre de lunes a viernes, una cabina garantizada al día y 10% en la barra.</p>
+      </article>
+    </div>
+  </section>
+
+  <section id="horario">
+    <div class="sec-head"><div class="bullet" aria-hidden="true">H</div><h2>Horario</h2></div>
+    <table class="hours" aria-label="Horario de apertura">
+      <tbody>
+        <tr data-days="1,2,3,4,5"><th scope="row">Lunes a viernes</th><td>07:00 – 20:00</td></tr>
+        <tr data-days="6"><th scope="row">Sábado</th><td>08:00 – 18:00</td></tr>
+        <tr data-days="0"><th scope="row">Domingo</th><td>08:00 – 18:00</td></tr>
+      </tbody>
+    </table>
+    <p class="menu-note">HORARIO EN HORA DE NUEVA YORK (ET).</p>
+  </section>
+
+  <section id="visita">
+    <div class="sec-head"><div class="bullet" aria-hidden="true">V</div><h2>Visítanos</h2></div>
+    <div class="visit">
+      <div class="contact">
+        <div>
+          <h3>Dirección</h3>
+          <p>000 Calle Ficticia<br>Nueva York, NY 00000</p>
+        </div>
+        <div>
+          <h3>Teléfono</h3>
+          <p class="mono">+1 (555) 010-0100</p>
+        </div>
+        <div>
+          <h3>Escríbenos</h3>
+          <p class="mono">hola@ninthalder.example</p>
+        </div>
+      </div>
+      <div class="contact">
+        <div>
+          <h3>Cómo llegar</h3>
+          <p>A dos minutos andando de la parada de metro. Entrada por la puerta verde, junto a la panadería.</p>
+        </div>
+        <div>
+          <h3>Grupos y eventos</h3>
+          <p>Reservamos la sala grande los domingos por la tarde para talleres y catas.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span><strong>Ninth &amp; Alder Coffee</strong> · © 2026</span>
+    <span>Sitio de práctica. Cafetería, dirección, teléfono y horario son inventados.</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  // Horario ficticio por día de la semana (0 = domingo). Hora de Nueva York.
+  var HOURS = { 0: [8, 18], 1: [7, 20], 2: [7, 20], 3: [7, 20], 4: [7, 20], 5: [7, 20], 6: [8, 18] };
+  var DAYS = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
+  function pad(n) { return (n < 10 ? "0" : "") + n; }
+
+  function nyNow() {
+    try {
+      var parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "America/New_York", weekday: "short", hour: "numeric", minute: "numeric", hour12: false
+      }).formatToParts(new Date());
+      var map = {};
+      parts.forEach(function (p) { map[p.type] = p.value; });
+      var idx = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }[map.weekday];
+      return { day: idx, minutes: (parseInt(map.hour, 10) % 24) * 60 + parseInt(map.minute, 10) };
+    } catch (e) { return null; }
+  }
+
+  var now = nyNow();
+  if (!now) return;
+
+  // Resalta la fila de hoy
+  document.querySelectorAll(".hours tr").forEach(function (tr) {
+    var days = tr.getAttribute("data-days").split(",").map(Number);
+    if (days.indexOf(now.day) !== -1) tr.classList.add("today");
+  });
+
+  // Estado abierto / cerrado
+  var status = document.getElementById("status");
+  var text = document.getElementById("status-text");
+  var h = HOURS[now.day];
+  var open = now.minutes >= h[0] * 60 && now.minutes < h[1] * 60;
+  if (open) {
+    status.setAttribute("data-open", "true");
+    text.textContent = "Abierto ahora, cerramos a las " + pad(h[1]) + ":00 (hora de NY)";
+  } else {
+    status.setAttribute("data-open", "false");
+    var next, label;
+    if (now.minutes < h[0] * 60) { next = h[0]; label = "hoy"; }
+    else { next = HOURS[(now.day + 1) % 7][0]; label = "mañana"; }
+    text.textContent = "Cerrado ahora, abrimos " + label + " a las " + pad(next) + ":00 (hora de NY)";
+  }
+
+  // Copiar clave del wifi
+  var btn = document.getElementById("copy");
+  var pass = document.getElementById("wifi-pass");
+  btn.addEventListener("click", function () {
+    function done() { btn.textContent = "Copiada"; setTimeout(function () { btn.textContent = "Copiar clave"; }, 1800); }
+    function fallback() {
+      try {
+        var r = document.createRange(); r.selectNodeContents(pass);
+        var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+        btn.textContent = "Selecciónala y copia";
+      } catch (e) {}
+    }
+    try {
+      navigator.clipboard.writeText(pass.textContent).then(done, fallback);
+    } catch (e) { fallback(); }
+  });
+})();
+</script>
+
+</body>
+</html>
